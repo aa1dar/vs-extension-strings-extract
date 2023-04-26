@@ -126,7 +126,7 @@ function createStringsFile(varTitle: String, varValue: String) {
 
 		fs.readFile(newPath2, 'utf8', (err: any, data: any) => {
 			if (!data.includes(varTitle)) { // if not exist 
-				var data2 = data.replace(regexReplace, "\n  static String " + varTitle + "=" + varValue + ";\n }");
+				var data2 = data.replace(regexReplace, "\n  static const String " + varTitle + "=" + varValue + ";\n }");
 				vscode.workspace.fs.writeFile(vscode.Uri.file(newPath2), new TextEncoder().encode(data2));
 			}
 			
@@ -176,7 +176,7 @@ function createStringsFileGetx(varTitle: String, varValue: String) {
 function frendlyText(text: String) {
 	var tiltle = text.replace("\"", ''); // Remove " "
 
-	tiltle = toTitleCase(tiltle); // Capitalize the first letter of each word.
+	tiltle = toLowerCase(tiltle); // Capitalize the first letter of each word.
 	tiltle = replaceAll(tiltle, " ", "");// tiltle.replace(" ", ''); // Remove spaces.
 	tiltle = tiltle.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');// Remove special characters.
 
@@ -224,10 +224,9 @@ function canShowAction() {
 }
 
 
-const toTitleCase = (phrase: string) => {
+const toLowerCase = (phrase: string) => {
 	return phrase
 		.toLowerCase()
 		.split(' ')
-		.map(word => word.charAt(0).toUpperCase() + word.slice(1))
 		.join(' ');
 };
